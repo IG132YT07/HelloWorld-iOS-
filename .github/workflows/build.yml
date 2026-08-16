@@ -1,0 +1,41 @@
+name: Build Unsigned IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: xcodegen generate
+
+      - name: Build App
+        run: |
+          xcodebuild -project HelloWorld.xcodeproj \
+            -scheme HelloWorld \
+            -sdk iphoneos \
+            -configuration Release \
+            SYMROOT=build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package to IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/Release-iphoneos/HelloWorld.app Payload/
+          zip -r HelloWorld.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: HelloWorld-IPA
+          path: HelloWorld.ipa
