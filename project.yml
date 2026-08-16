@@ -1,17 +1,16 @@
 name: HelloWorld
 options:
   bundleIdPrefix: com.myhello.app
-  deploymentTarget:
-    iOS: "15.0"
 targets:
   HelloWorld:
     type: application
     platform: iOS
+    deploymentTarget: "15.0"
     sources:
       - HelloWorld
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.myhello.app.HelloWorld
-        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: HelloWorld/Info.plist
         CODE_SIGNING_ALLOWED: NO
         CODE_SIGNING_REQUIRED: NO
