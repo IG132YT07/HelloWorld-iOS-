@@ -1,6 +1,7 @@
 name: HelloWorld
 options:
   bundleIdPrefix: com.myhello.app
+  objectVersion: 56
 targets:
   HelloWorld:
     type: application
